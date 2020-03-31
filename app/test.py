@@ -28,10 +28,11 @@ class ApiTestCase(unittest.TestCase):
 
     def test_api_send(self):
         tester = app.test_client(self)
-        with open('assets/marie_curie.jpg', 'rb') as img:
-            image_name = hashlib.md5(img.read()).hexdigest()
+        with open('assets/marie_curie.jpg', 'rb') as img.read():
+            img = img.read()
+            image_name = hashlib.md5(img.hexdigest()
             content = 'application/json'
-            response = tester.post('/send', content_type=content, data=img.read())
+            response = tester.post('/send', content_type=content, data=img)
         expected = '{"file_name": "' + image_name + '"}'
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.data, expected)
@@ -42,6 +43,7 @@ class ApiTestCase(unittest.TestCase):
         response = tester.post('/send', content_type=content)
         self.assertEqual(response.status_code, 418)
         self.assertEqual(response.data, b'Envie uma imagem')
+
 
 if __name__ == '__main__':
     unittest.main()
