@@ -28,4 +28,4 @@ def test():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=4000, threaded=True)
+    app.run(host='0.0.0.0', port=3000, threaded=True)
