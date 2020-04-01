@@ -9,6 +9,7 @@ channel.queue_declare(queue='images')
 
 def callback(ch, method, properties, body):
     snapse.resize(body)
+    channel.confirm_delivery()
 
 
 channel.basic_consume(
