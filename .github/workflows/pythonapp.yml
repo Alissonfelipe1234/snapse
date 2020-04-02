@@ -40,4 +40,4 @@ jobs:
       run: |
         python app/test.py
         cd core/
-        ptyhon test.py
+        python test.py
