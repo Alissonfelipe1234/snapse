@@ -1,6 +1,6 @@
 version: "3"
 services:
-  queue:
+  queue_rabbitmq:
     container_name: queue_rabbitmq
     image: rabbitmq:3.8.3
     restart: always
@@ -8,7 +8,7 @@ services:
       - "5672:5672"
 
   minimalist_api:
-    container_name: api
+    container_name: minimalist_api
     build: ./app
     restart: always
     depends_on: 
@@ -20,7 +20,7 @@ services:
     container_name: consumer_image
     build: ./core
     depends_on:
-      - api
+      - minimalist_api
       - queue_rabbitmq
     restart: always
     volumes:
