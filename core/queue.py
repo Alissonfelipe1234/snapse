@@ -1,7 +1,7 @@
 import pika
 import snapse
 connection = pika.BlockingConnection(
-    pika.ConnectionParameters(host='localhost', port=5672))
+    pika.ConnectionParameters(host='127.0.0.1', port=5672))
 channel = connection.channel()
 
 channel.queue_declare(queue='images')
