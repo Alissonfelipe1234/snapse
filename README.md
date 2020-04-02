@@ -8,7 +8,14 @@
 
 Snapse is a flask api that takes care of the image editing process for your system, in addition to being scalable it is fast and secure </br>
 
-You can integrate with any system without knowing how it is done, because it doesn't matter
+You can integrate with any system without knowing how it is done, because it doesn't matter.</br>
+
+And it's faster than working locally.
+
+## How does it work?
+The REST API is servicing all request, while the rabbitMq queue connects the consumer that resizes image and saves it in PNG format on Amazon S3 Cloud Storage Service. </br>
+
+You send the image and the system returns with new file name.
 
 ## How to dowload Snapse
 ```bash
