@@ -1,5 +1,5 @@
+<img src="https://github.com/Alissonfelipe1234/snapse/workflows/Python%20unittest/badge.svg" title="unit tests" alt="Unit test logo">
 <p align="center">
-![Python unittest](https://github.com/Alissonfelipe1234/snapse/workflows/Python%20unittest/badge.svg)
 <img src="logo.png" title="Minimalist api" alt="Snapse logo">
 </p>
 
