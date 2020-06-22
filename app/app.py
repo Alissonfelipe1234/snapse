@@ -23,8 +23,8 @@ def resize():
     content = request.content_type
     if not content or not content.startswith('image'):
         return jsonify(message='send a valid image'), 415
-    width = request.headers.get('width')
-    height = request.headers.get('height')
+    width = int(request.headers.get('width'))
+    height = int(request.headers.get('height'))
     if not width:
         return jsonify(message='use the width`s header'), 418
     if not height:

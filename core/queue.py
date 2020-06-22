@@ -2,7 +2,6 @@ import pika
 import snapse
 import json
 import base64
-import hashlib
 
 connection = pika.BlockingConnection(
     pika.ConnectionParameters(host='127.0.0.1', port=5672))
@@ -16,8 +15,7 @@ def callback(ch, method, properties, body):
     image = base64.decodebytes(bytes(data['image'], encoding='utf-8'))
     width = int(data['width'])
     height = int(data['height'])
-    name = hashlib.md5(data).hexdigest()
-    snapse.resize(image, width, height, name)
+    snapse.resize(image, width, height)
     channel.confirm_delivery()
 
 
