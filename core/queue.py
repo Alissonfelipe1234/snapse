@@ -13,7 +13,8 @@ channel.queue_declare(queue='images')
 
 def callback(ch, method, properties, body):
     data = json.loads(body)
-    snapse.resize(data['image'], data['width'], data['height'])
+    image = gzip.decompress(data['image'])
+    snapse.resize(image, data['width'], data['height'])
     channel.confirm_delivery()
 
 

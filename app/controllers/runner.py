@@ -12,7 +12,8 @@ class Runner(object):
         self.channel.queue_declare(queue='images')
 
     def resize(self, image_binary, width, height):
-        data = {'image':str(gzip.compress(image_binary)),'width':width, 'height':height}
+        image = str(gzip.compress(image_binary))
+        data = {'image': image, 'width': width, 'height': height}
         self.channel.basic_publish(
             exchange='', routing_key='images', body=json.dumps(data))
         return hashlib.md5(image_binary).hexdigest() + ".png"

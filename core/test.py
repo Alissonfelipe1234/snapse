@@ -5,7 +5,7 @@ import snapse
 
 class ApiTestCase(unittest.TestCase):
     def test_api_test(self):
-        with open('../images/marie_curie.jpg', 'rb') as img:
+        with open('./images/marie_curie.jpg', 'rb') as img:
             binary = img.read()
             snapse.resize(binary, 200, 200)
             file_name = './images/' + hashlib.md5(binary).hexdigest() + '.png'

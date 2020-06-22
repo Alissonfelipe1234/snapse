@@ -36,7 +36,5 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with unittest
       run: |
-        cd core/
-        python test.py
-        cd ../app
-        python test.py
+        python core/test.py
+        python app/test.py

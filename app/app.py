@@ -7,7 +7,11 @@ runner = Runner()
 
 @app.route('/', methods=['GET'])
 def index():
-    s = {'/': 'home', '/resize': 'resize images, use header width and height', '/test': 'test request'}
+    s = {
+        '/': 'home',
+        '/resize': 'resize images, use header width and height',
+        '/test': 'test request'
+        }
     return jsonify(valid_paths=s), 200
 
 
@@ -16,13 +20,16 @@ def resize():
     image_bytes = request.data
     if image_bytes == b'':
         return jsonify(message='send a image'), 418
-    if not request.content_type or not request.content_type.startswith('image'):
+    content = request.content_type
+    if not content or not content.startswith('image'):
         return jsonify(message='send a valid image'), 415
-    if not request.headers.get('width'):
+    width = request.headers.get('width')
+    height = request.headers.get('height')
+    if not width:
         return jsonify(message='use the width`s header'), 418
-    if not request.headers.get('height'):
+    if not height:
         return jsonify(message='use the height`s header'), 418
-    name = runner.resize(image_bytes, request.headers.get('width'), request.headers.get('height'))
+    name = runner.resize(image_bytes, width, height)
     return jsonify(file_name=name), 201
 
 
