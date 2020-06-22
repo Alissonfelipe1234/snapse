@@ -1,29 +1,11 @@
 version: "3"
 services:
-  queue_rabbitmq:
-    container_name: queue_rabbitmq
-    image: rabbitmq:3.8.3
-    restart: always
+  rabbitmq:
+    image: rabbitmq
     ports:
-      - "5672:5672"
-
-  minimalist_api:
-    container_name: minimalist_api
-    build: ./app
-    restart: always
-    depends_on: 
-      - queue_rabbitmq
-    ports:
-      - "3000:3000"
-
-  consumer:
-    container_name: consumer_image
-    build: ./core
-    depends_on:
-      - minimalist_api
-      - queue_rabbitmq
-    restart: always
-    volumes:
-      - "/images/"
-
-  
+    - "4369:4369"
+    - "5671:5671"
+    - "5672:5672"
+    - "25672:25672"
+    - "15671:15671"
+    - "15672:15672"

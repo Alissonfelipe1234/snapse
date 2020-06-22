@@ -1,5 +1,7 @@
 import pika
 import hashlib
+import gzip
+import json
 
 
 class Runner(object):
@@ -9,9 +11,10 @@ class Runner(object):
         self.channel = self.connection.channel()
         self.channel.queue_declare(queue='images')
 
-    def send(self, image_binary):
+    def resize(self, image_binary, width, height):
+        data = {'image':str(gzip.compress(image_binary)),'width':width, 'height':height}
         self.channel.basic_publish(
-            exchange='', routing_key='images', body=image_binary)
+            exchange='', routing_key='images', body=json.dumps(data))
         return hashlib.md5(image_binary).hexdigest() + ".png"
 
     def close(self):
