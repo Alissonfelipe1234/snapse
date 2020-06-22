@@ -26,15 +26,13 @@ $ cd snapse
 
 ## How to run the project
 ```bash
-$ docker build .
-$ docker-composer up -d
+$ bash run_app.sh
 ```
 
 ## The unit tests
 ```bash
 $ python app/test.py
-$ cd core/
-$ python test.py
+$ python core/test.py
 ```
 </br>
 
@@ -43,4 +41,4 @@ $ python test.py
 | ------------- |:--------------:|:-------------:| -----:|
 | / | GET | None | all routes in JSON |
 | /test | GET | None |a message status |
-| /send | POST | Binary image | the file name generad|
+| /resize | POST | Binary image | the file name generad|
