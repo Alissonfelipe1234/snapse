@@ -1,8 +1,8 @@
 import pika
 import snapse
-import gzip
 import json
-
+import base64
+import hashlib
 
 connection = pika.BlockingConnection(
     pika.ConnectionParameters(host='127.0.0.1', port=5672))
@@ -13,8 +13,11 @@ channel.queue_declare(queue='images')
 
 def callback(ch, method, properties, body):
     data = json.loads(body)
-    image = gzip.decompress(data['image'])
-    snapse.resize(image, data['width'], data['height'])
+    image = base64.decodebytes(bytes(data['image'], encoding='utf-8'))
+    width = int(data['width'])
+    height = int(data['height'])
+    name = hashlib.md5(data).hexdigest()
+    snapse.resize(image, width, height, name)
     channel.confirm_delivery()
 
 
