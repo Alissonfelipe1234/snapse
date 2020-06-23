@@ -10,7 +10,7 @@ channel = connection.channel()
 channel.queue_declare(queue='images')
 
 
-def callback(ch, method, properties, body):
+def rescaler(ch, method, properties, body):
     data = json.loads(body)
     image = base64.decodebytes(bytes(data['image'], encoding='utf-8'))
     width = int(data['width'])
@@ -19,8 +19,19 @@ def callback(ch, method, properties, body):
     channel.confirm_delivery()
 
 
-channel.basic_consume(
-    queue='images', on_message_callback=callback, auto_ack=True)
+def formater(ch, method, properties, body):
+    data = json.loads(body)
+    image = base64.decodebytes(bytes(data['image'], encoding='utf-8'))
+    kind = data['kind']
+    snapse.formater(image, kind)
+    channel.confirm_delivery()
 
-print('Queue is started. To exit press CTRL+C')
+
+channel.basic_consume(
+    queue='resize', on_message_callback=rescaler, auto_ack=True)
+
+channel.basic_consume(
+    queue='filter', on_message_callback=formater, auto_ack=True)
+
+print('Queues are started. To exit press CTRL+C')
 channel.start_consuming()

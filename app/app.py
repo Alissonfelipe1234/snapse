@@ -10,9 +10,23 @@ def index():
     s = {
         '/': 'home',
         '/resize': 'resize images, use header width and height',
+        '/filter/<kinds>': 'filter images, kinds'
+        '(blur, contour, detail, emboss, edges),',
         '/test': 'test request'
         }
     return jsonify(valid_paths=s), 200
+
+
+@app.route('/filter/<kind>', methods=['POST'])
+def filters(kind):
+    image_bytes = request.data
+    if image_bytes == b'':
+        return jsonify(message='send a image'), 418
+    content = request.content_type
+    if not content or not content.startswith('image'):
+        return jsonify(message='send a valid image'), 415
+    name = runner.formater(image_bytes, kind)
+    return jsonify(file_name=name), 201
 
 
 @app.route('/resize', methods=['POST'])
