@@ -39,9 +39,10 @@ class ApiTestCase(unittest.TestCase):
         content = 'image/jpg'
         binary = b'zeros_e_uns'
         name_file = hashlib.md5(binary + bytes(200) + bytes(200)).hexdigest()
+        header = {'width': '200', 'height': '200'}
         response = tester.post('/resize',
                                content_type=content, data=binary,
-                               headers={'width': '200', 'width': '200'})
+                               headers=header)
         expected = '{"file_name":"' + name_file + '.png"}\n'
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.data.decode('utf-8'), expected)

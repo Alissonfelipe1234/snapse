@@ -13,7 +13,7 @@ def index():
         '/filter/<kinds>': 'filter images, kinds'
         '(blur, contour, detail, emboss, edges),',
         '/test': 'test request'
-        }
+    }
     return jsonify(valid_paths=s), 200
 
 
@@ -37,12 +37,18 @@ def resize():
     content = request.content_type
     if not content or not content.startswith('image'):
         return jsonify(message='send a valid image'), 415
-    width = int(request.headers.get('width'))
-    height = int(request.headers.get('height'))
-    if not width:
+    try:
+        width = int(request.headers['width'])
+    except Exception as identifier:
+        print(identifier)
         return jsonify(message='use the width`s header'), 418
-    if not height:
+
+    try:
+        height = int(request.headers['height'])
+    except Exception as identifier:
+        print(identifier)
         return jsonify(message='use the height`s header'), 418
+
     name = runner.resize(image_bytes, width, height)
     return jsonify(file_name=name), 201
 
